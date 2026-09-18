@@ -18,8 +18,14 @@ const Input = (() => {
         const gameContainer = document.querySelector('.game-container');
         if (gameContainer) {
             gameContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
+            gameContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
             gameContainer.addEventListener('touchend', handleTouchEnd, { passive: false });
         }
+
+        // Prevent whole-page scroll/bounce on the game area
+        document.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
     }
 
     function destroy() {
@@ -29,6 +35,7 @@ const Input = (() => {
         const gameContainer = document.querySelector('.game-container');
         if (gameContainer) {
             gameContainer.removeEventListener('touchstart', handleTouchStart);
+            gameContainer.removeEventListener('touchmove', handleTouchMove);
             gameContainer.removeEventListener('touchend', handleTouchEnd);
         }
     }
@@ -84,9 +91,14 @@ const Input = (() => {
 
     function handleTouchStart(e) {
         if (e.touches.length > 1) return;
+        e.preventDefault();
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
         touchStartTime = Date.now();
+    }
+
+    function handleTouchMove(e) {
+        e.preventDefault();
     }
 
     function handleTouchEnd(e) {
