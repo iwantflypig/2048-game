@@ -127,7 +127,7 @@ const Game = (() => {
             const S = Board.SIZE;
             for (let r = 0; r < S; r++) {
                 for (let c = 0; c < S; c++) {
-                    if (state.board[r][c] >= 4096) {
+                    if (state.board[r][c] >= 2048) {
                         state.won = true;
                         break;
                     }
