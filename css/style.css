@@ -1,0 +1,389 @@
+/* ============================================
+   2048 Game - Styles
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    background: #faf8ef;
+    color: #776e65;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.container {
+    width: 500px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* ---- Header ---- */
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 80px;
+    font-weight: 700;
+    color: #776e65;
+    line-height: 1;
+}
+
+.scores-container {
+    display: flex;
+    gap: 8px;
+}
+
+.score-container,
+.best-container {
+    background: #bbada0;
+    border-radius: 6px;
+    padding: 8px 20px;
+    min-width: 80px;
+    text-align: center;
+}
+
+.score-label {
+    font-size: 13px;
+    color: #eee4da;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.score-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* ---- Above Game ---- */
+.above-game {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.game-intro {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.restart-btn {
+    background: #8f7a66;
+    color: #f9f6f2;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.restart-btn:hover {
+    background: #9f8b77;
+}
+
+.restart-btn:active {
+    transform: translateY(1px);
+}
+
+/* ---- Game Container ---- */
+.game-container {
+    position: relative;
+    background: #bbada0;
+    border-radius: 10px;
+    padding: 15px;
+    width: 500px;
+    height: 500px;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+/* ---- Grid Background ---- */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+}
+
+.grid-cell {
+    background: rgba(238, 228, 218, 0.35);
+    border-radius: 6px;
+}
+
+/* ---- Tile Container ---- */
+.tile-container {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    pointer-events: none;
+}
+
+/* ---- Individual Tiles ---- */
+.tile {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border-radius: 6px;
+    transition: transform 0.12s ease-in-out;
+    z-index: 10;
+}
+
+.tile-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+}
+
+/* Tile positions - calculated by CSS variables */
+.tile {
+    width: calc((100% - 60px) / 6);  /* 6 cols, 5 gaps of 12px */
+    height: calc((100% - 60px) / 6);
+    transform: translate(
+        calc(var(--col) * (100% + 12px)),
+        calc(var(--row) * (100% + 12px))
+    );
+}
+
+/* Tile Colors */
+.tile-2 .tile-inner    { background: #eee4da; color: #776e65; }
+.tile-4 .tile-inner    { background: #ede0c8; color: #776e65; }
+.tile-8 .tile-inner    { background: #f2b179; color: #f9f6f2; }
+.tile-16 .tile-inner   { background: #f59563; color: #f9f6f2; }
+.tile-32 .tile-inner   { background: #f67c5f; color: #f9f6f2; }
+.tile-64 .tile-inner   { background: #f65e3b; color: #f9f6f2; }
+.tile-128 .tile-inner  { background: #edcf72; color: #f9f6f2; }
+.tile-256 .tile-inner  { background: #edcc61; color: #f9f6f2; }
+.tile-512 .tile-inner  { background: #edc850; color: #f9f6f2; }
+.tile-1024 .tile-inner { background: #edc53f; color: #f9f6f2; }
+.tile-2048 .tile-inner { background: #edc22e; color: #f9f6f2; box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.4); }
+.tile-super .tile-inner { background: #3c3a32; color: #f9f6f2; }
+
+/* Tile font sizes */
+.tile-2 .tile-inner,
+.tile-4 .tile-inner,
+.tile-8 .tile-inner    { font-size: 38px; }
+.tile-16 .tile-inner,
+.tile-32 .tile-inner,
+.tile-64 .tile-inner   { font-size: 30px; }
+.tile-128 .tile-inner,
+.tile-256 .tile-inner,
+.tile-512 .tile-inner  { font-size: 24px; }
+.tile-1024 .tile-inner,
+.tile-2048 .tile-inner { font-size: 20px; }
+.tile-super .tile-inner { font-size: 16px; }
+
+/* Tile Animations */
+.tile-new .tile-inner {
+    animation: appear 0.2s ease-in-out;
+    animation-fill-mode: backwards;
+}
+
+.tile-merged .tile-inner {
+    animation: pop 0.2s ease-in-out;
+    animation-fill-mode: backwards;
+    z-index: 20;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ---- Game Message (Win / Game Over) ---- */
+.game-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(238, 228, 218, 0.73);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 100;
+}
+
+.game-message.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.game-message.win {
+    background: rgba(237, 194, 46, 0.5);
+}
+
+.game-message p {
+    font-size: 60px;
+    font-weight: 700;
+    color: #776e65;
+}
+
+.game-message.win p {
+    color: #f9f6f2;
+}
+
+.game-message .lower {
+    display: flex;
+    gap: 12px;
+}
+
+.retry-button,
+.keep-playing-button {
+    background: #8f7a66;
+    color: #f9f6f2;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.retry-button:hover,
+.keep-playing-button:hover {
+    background: #9f8b77;
+}
+
+.keep-playing-button {
+    display: none;
+}
+
+.game-message.win .keep-playing-button {
+    display: inline-block;
+}
+
+/* ---- Explanation ---- */
+.game-explanation {
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.game-explanation strong {
+    color: #776e65;
+}
+
+/* ---- Mobile / Responsive ---- */
+@media screen and (max-width: 520px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    .title {
+        font-size: 50px;
+    }
+
+    .score-container,
+    .best-container {
+        padding: 6px 12px;
+        min-width: 60px;
+    }
+
+    .score-value {
+        font-size: 18px;
+    }
+
+    .game-intro {
+        font-size: 15px;
+    }
+
+    .game-container {
+        padding: 10px;
+        width: 100%;
+        height: auto;
+    }
+
+    .grid-container {
+        gap: 6px;
+    }
+
+    .tile-container {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .tile {
+        width: calc((100% - 30px) / 6);
+        height: calc((100% - 30px) / 6);
+        transform: translate(
+            calc(var(--col) * (100% + 6px)),
+            calc(var(--row) * (100% + 6px))
+        );
+    }
+
+    .tile-2 .tile-inner,
+    .tile-4 .tile-inner,
+    .tile-8 .tile-inner    { font-size: 24px; }
+    .tile-16 .tile-inner,
+    .tile-32 .tile-inner,
+    .tile-64 .tile-inner   { font-size: 18px; }
+    .tile-128 .tile-inner,
+    .tile-256 .tile-inner,
+    .tile-512 .tile-inner  { font-size: 14px; }
+    .tile-1024 .tile-inner,
+    .tile-2048 .tile-inner { font-size: 12px; }
+    .tile-super .tile-inner { font-size: 10px; }
+
+    .game-message p {
+        font-size: 36px;
+    }
+}
